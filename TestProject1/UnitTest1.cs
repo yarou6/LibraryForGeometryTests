@@ -11,7 +11,7 @@ namespace TestProject1
         public void Setup()
         {
         }
-
+        //1
         [Test]
         public void PointsWithSameCoordinates_AreEqual()
         {
@@ -65,7 +65,7 @@ namespace TestProject1
 
 
 
-
+        //2
         [Test]
         public void BoundingBox_Center_CalculatesCorrectly()
         {
@@ -147,7 +147,7 @@ namespace TestProject1
 
 
 
-
+        //3
         [Test]
         public void Circle_GetArea_CorrectValue()
         {
@@ -205,7 +205,7 @@ namespace TestProject1
 
 
 
-
+        //4
 
         [Test]
         public void Rectangle_GetArea_CorrectValue()
@@ -271,7 +271,7 @@ namespace TestProject1
 
 
 
-
+        //5
         [Test]
         public void Triangle_GetArea_CorrectForValidSides()
         {
@@ -351,7 +351,7 @@ namespace TestProject1
         
         
         
-        
+        //6
         [Test]
         public void Polygon_Empty_GetAreaReturnsZero()
         {
@@ -442,7 +442,7 @@ namespace TestProject1
         {
             
         }
-
+        //7
 
 
 
