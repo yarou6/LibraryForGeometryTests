@@ -7,6 +7,7 @@
 
         public Point(double x, double y)
         {
+            if (this == null) throw new ArgumentNullException();
             X = x;
             Y = y;
         }
