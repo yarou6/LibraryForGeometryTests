@@ -404,10 +404,12 @@ namespace TestProject1
             Point point1 = new Point(0, 0);
             Point point2 = new Point(4, 4);
 
-            var box = polygon.GetBoundingBox();
+            
 
             polygon.AddShape(new Circle(new Point(0, 0), 1));
             polygon.AddShape(new Rectangle(new Point(4, 4), 2, 2));
+            
+            var box = polygon.GetBoundingBox();
             Assert.That(box.BottomLeft.X, Is.EqualTo(point1.X - 1));
             Assert.That(box.BottomLeft.Y, Is.EqualTo(point1.Y - 1));
             Assert.That(box.TopRight.X, Is.EqualTo(point2.X + 1));
@@ -444,9 +446,9 @@ namespace TestProject1
         public void Polygon_HasIntersection_ReturnsTrue_WhenOverlapping()
         {
             Polygon polygon = new Polygon();
-
+            
             polygon.AddShape(new Rectangle(new Point(0, 0), 2, 2));
-            polygon.AddShape(new Rectangle(new Point(5, 5), 2, 2));
+            polygon.AddShape(new Rectangle(new Point(1, 1), 2, 2));
 
             Assert.IsTrue(polygon.HasIntersection());
         }
@@ -527,8 +529,8 @@ namespace TestProject1
 
             Assert.That(box.BottomLeft.X, Is.EqualTo(point1.X - 1));
             Assert.That(box.BottomLeft.Y, Is.EqualTo(point1.Y - 1));
-            Assert.That(box.TopRight.X, Is.EqualTo(point2.X + 1));
-            Assert.That(box.TopRight.Y, Is.EqualTo(point2.Y + 1));
+            Assert.That(box.TopRight.X, Is.EqualTo(point1.X + 1));
+            Assert.That(box.TopRight.Y, Is.EqualTo(point1.Y + 1));
 
         }
 
