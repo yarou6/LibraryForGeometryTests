@@ -396,55 +396,157 @@ namespace TestProject1
             double polplh2 = polygon.GetArea();
             Assert.IsTrue(polplh1 > polplh2);
         }
-           
+
         [Test]
         public void Polygon_GetBoundingBox_CalculatesCorrectBounds()
         {
+            Polygon polygon = new Polygon();
+            Point point1 = new Point(0, 0);
+            Point point2 = new Point(4, 4);
+
+            var box = polygon.GetBoundingBox();
+
+            polygon.AddShape(new Circle(new Point(0, 0), 1));
+            polygon.AddShape(new Rectangle(new Point(4, 4), 2, 2));
+            Assert.That(box.BottomLeft.X, Is.EqualTo(point1.X - 1));
+            Assert.That(box.BottomLeft.Y, Is.EqualTo(point1.Y - 1));
+            Assert.That(box.TopRight.X, Is.EqualTo(point2.X + 1));
+            Assert.That(box.TopRight.Y, Is.EqualTo(point2.Y + 1));
 
         }
 
-           
+
         [Test]
         public void Polygon_AddNullShape_ThrowsException()
         {
-            
+            Polygon polygon = new Polygon();
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                polygon.AddShape(null);
+            });
         }
 
-           
+
         [Test]
         public void Polygon_RemoveNullShape_ThrowsException()
         {
-            
+            Polygon polygon = new Polygon();
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                polygon.RemoveShape(null);
+            });
         }
 
 
         [Test]
         public void Polygon_HasIntersection_ReturnsTrue_WhenOverlapping()
         {
-            
+            Polygon polygon = new Polygon();
+
+            polygon.AddShape(new Rectangle(new Point(0, 0), 2, 2));
+            polygon.AddShape(new Rectangle(new Point(5, 5), 2, 2));
+
+            Assert.IsTrue(polygon.HasIntersection());
         }
 
 
         [Test]
         public void Polygon_HasIntersection_ReturnsFalse_WhenNoOverlap()
         {
-            
+            Polygon polygon = new Polygon();
+
+            polygon.AddShape(new Rectangle(new Point(0, 0), 2, 2));
+            polygon.AddShape(new Rectangle(new Point(5, 5), 2, 2));
+
+            Assert.IsFalse(polygon.HasIntersection());
+
         }
 
         [Test]
         public void Polygon_HasIntersection_SingleShape_ReturnsFalse()
         {
-            
+            Polygon polygon = new Polygon();
+
+            polygon.AddShape(new Rectangle(new Point(0, 0), 2, 2));
+
+            Assert.IsFalse(polygon.HasIntersection());
         }
 
         [Test]
         public void Polygon_HasIntersection_Empty_ReturnsFalse()
         {
-            
+
+            Polygon polygon = new Polygon();
+
+            Assert.IsFalse(polygon.HasIntersection());
         }
-        //7
+        //Дополнительно
+
+        public void Polygon_GetBoundingBox_ForMixedShapes_Correct()
+        {
+            Polygon polygon = new Polygon();
+            Point point1 = new Point(0, 0);
+            Point point2 = new Point(4, 4);
+            Point point3 = new Point(-3, -3);
 
 
+            polygon.AddShape(new Circle(point1, 1));
+            polygon.AddShape(new Rectangle(point2, 2, 2));
+            polygon.AddShape(new Triangle(point3, 3, 4, 5));
+
+            var box = polygon.GetBoundingBox();
+
+            Assert.LessOrEqual(box.BottomLeft.X, point3.X);
+            Assert.LessOrEqual(box.BottomLeft.Y, point3.Y);
+
+            Assert.GreaterOrEqual(box.TopRight.X, point2.X + 1);
+            Assert.GreaterOrEqual(box.TopRight.Y, point2.Y + 1);
+
+        }
+
+        public void Polygon_GetBoundingBox_AfterRemove_UpdatesCorrectly()
+        {
+            Polygon polygon = new Polygon();
+
+            Point point1 = new Point(0, 0);
+            Point point2 = new Point(10, 10);
+
+            var q1 = new Rectangle(point1, 2, 2);
+            var q2 = new Rectangle(point2, 2, 2);
+
+
+            polygon.AddShape(q1);
+            polygon.AddShape(q2);
+            polygon.RemoveShape(q2);
+
+            var box = polygon.GetBoundingBox();
+
+
+            Assert.That(box.BottomLeft.X, Is.EqualTo(point1.X - 1));
+            Assert.That(box.BottomLeft.Y, Is.EqualTo(point1.Y - 1));
+            Assert.That(box.TopRight.X, Is.EqualTo(point2.X + 1));
+            Assert.That(box.TopRight.Y, Is.EqualTo(point2.Y + 1));
+
+        }
+
+        public void Polygon_GetCenter_CalculatesFromBoundingBox()
+        {
+            Polygon polygon = new Polygon();
+
+            Point point1 = new Point(2, 2);
+            Point point2 = new Point(6, 6);
+
+            polygon.AddShape(new Rectangle(point1, 2, 2));
+            polygon.AddShape(new Rectangle(point2, 2, 2));
+
+            var center = polygon.Position;
+
+            Assert.That(center.X, Is.EqualTo(point2.X - point1.Y));
+            Assert.That(center.Y, Is.EqualTo(point2.Y - point1.X));
+
+        }
 
 
 
