@@ -483,7 +483,7 @@ namespace TestProject1
             Assert.IsFalse(polygon.HasIntersection());
         }
         //Дополнительно
-
+        [Test]
         public void Polygon_GetBoundingBox_ForMixedShapes_Correct()
         {
             Polygon polygon = new Polygon();
@@ -506,6 +506,7 @@ namespace TestProject1
 
         }
 
+        [Test]
         public void Polygon_GetBoundingBox_AfterRemove_UpdatesCorrectly()
         {
             Polygon polygon = new Polygon();
@@ -531,6 +532,7 @@ namespace TestProject1
 
         }
 
+        [Test]
         public void Polygon_GetCenter_CalculatesFromBoundingBox()
         {
             Polygon polygon = new Polygon();
